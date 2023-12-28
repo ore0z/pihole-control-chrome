@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        .settingLine {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #effbff;
+            margin-bottom: 5px; /* Adjust as needed */
+        }
+
+        .deleteButton {
+            background-color: #f44336; /* Red color */
+            color: white;
+            /* Other button styling (padding, border, etc.) */
+            float: right; /* Align to the right */
+        }
+
+        .deleteButton:hover {
+            background-color: #d32f2f; /* Darker shade of red for hover effect */
+        }
+
+        .settingDiv {
+            clear: both; /* Clear the float */
+        }
+        body {
+            width: 250px;
+        }
+        button {
+            background-color: #008CBA;
+            border: none;
+            color: white;
+            padding: 5px 10px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        input[type="text"], select {
+            width: 100%;
+            padding: 5px;
+            margin: 5px 0 5px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button:hover {
+            background-color: #005f6a;
+        }
+
+        #disableAllPiholeButton {
+            background-color: #f44336;
+            padding: 10px 20px;
+            width: 100%;
+        }
+
+        #disableAllPiholeButton:hover {
+            background-color: #da190b;
+        }
+
+        #enableAllPiholeButton {
+            background-color: #4CAF50;
+            padding: 10px 20px;
+            width: 100%;
+        }
+
+        #enableAllPiholeButton:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <script src="popup.js"></script>
+    <div>
+        <label>Pi-hole Address:</label>
+        <input type="text" id="newPiholeAddress">
+    </div>
+    <div>
+        <label>API Key:</label>
+        <input type="text" id="newApiKey">
+    </div>
+    <button id="addPiholeButton">Add PiHole</button>
+    <br><h3>Pi-hole Controls:</h3>
+    <div>
+        <label for="disableDuration">Disable Duration:</label>
+        <select id="disableDuration">
+            <option value="300">5 minutes</option>
+            <option value="600" selected>10 minutes</option>
+            <option value="900">15 minutes</option>
+            <option value="1800">30 minutes</option>
+            <option value="3600">1 hour</option>
+        </select>
+    </div>
+
+    <button id="disableAllPiholeButton">Disable All Pi-holes</button>
+    <button id="enableAllPiholeButton">Enable All Pi-holes</button>
+
+    <!-- Display area for saved Pi-holes -->
+
+    <h3>Saved Pi-holes:</h3>
+    <div id="savedPiholeSettings">
+        <!-- Saved Pi-hole settings will be displayed here -->
+    </div>
+
+</body>
+</html>

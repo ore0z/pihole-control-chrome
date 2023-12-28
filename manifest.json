@@ -1,0 +1,20 @@
+{
+  "manifest_version": 3,
+  "name": "Pi-hole Controller",
+  "icons": {
+    "16": "images/pihole16.png",
+    "48": "images/pihole48.png",
+    "128": "images/pihole128.png"
+  },
+  "version": "1.0",
+  "description": "Enable and disable multiple Pi-hole instances",
+  "permissions": [
+    "storage"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "action": {
+    "default_popup": "pihole.html"
+  }
+}
