@@ -31,9 +31,11 @@ document.addEventListener('DOMContentLoaded', function() {
 function disableAllPihole() {
     var selectedDuration = document.getElementById('disableDuration').value;
     makeApiCallForAllPihole(`disable=${selectedDuration}`);
+    window.close();
 }
 function enableAllPihole() {
     makeApiCallForAllPihole('enable');
+    window.close();
 }
 
 function makeApiCallForAllPihole(query) {
