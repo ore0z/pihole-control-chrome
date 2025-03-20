@@ -30,29 +30,44 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function disableAllPihole() {
     var selectedDuration = document.getElementById('disableDuration').value;
-    makeApiCallForAllPihole(`disable=${selectedDuration}`);
-    window.close();
-}
-function enableAllPihole() {
-    makeApiCallForAllPihole('enable');
-    window.close();
-}
-
-function makeApiCallForAllPihole(query) {
-    chrome.storage.local.get('piholeSettings', function(result) {
-        if (result.piholeSettings && result.piholeSettings.length > 0) {
-            result.piholeSettings.forEach(setting => {
-                fetch(`http://${setting.address}/admin/api.php?${query}&auth=${setting.key}`)
-                    .then(response => response.json())
-                    .then(data => console.log(`Pi-hole at ${setting.address} ${query.startsWith('disable') ? 'disabled' : 'enabled'}:`, data))
-                    .catch(error => console.error(`Error ${query.startsWith('disable') ? 'disabling' : 'enabling'} Pi-hole at ${setting.address}:`, error));
-            });
-        } else {
-            console.log('No Pi-hole settings saved.');
-        }
+    makeApiCallForAllPihole(`disable=${selectedDuration}`).then(() => {
+        window.close();
     });
 }
 
+function enableAllPihole() {
+    makeApiCallForAllPihole('enable').then(() => {
+        window.close();
+    });
+}
+
+function makeApiCallForAllPihole(query) {
+    return new Promise((resolve, reject) => {
+        chrome.storage.local.get('piholeSettings', function(result) {
+            if (result.piholeSettings && result.piholeSettings.length > 0) {
+                const promises = result.piholeSettings.map(setting => 
+                    fetch(`http://${setting.address}/admin/api.php?${query}&auth=${setting.key}`, {
+                        mode: 'no-cors'
+                    })
+                    .then(response => {
+                        console.log(`Request sent to Pi-hole at ${setting.address}`);
+                    })
+                    .catch(error => {
+                        console.error(`Error ${query.startsWith('disable') ? 'disabling' : 'enabling'} Pi-hole at ${setting.address}:`, error);
+                        throw error;
+                    })
+                );
+
+                Promise.all(promises)
+                    .then(() => resolve())
+                    .catch(error => reject(error));
+            } else {
+                console.log('No Pi-hole settings saved.');
+                resolve();
+            }
+        });
+    });
+}
 
 function displaySavedSettings() {
     chrome.storage.local.get('piholeSettings', function(result) {
@@ -87,8 +102,6 @@ function displaySavedSettings() {
         }
     });
 }
-
-
 
 function deleteSetting(index) {
     chrome.storage.local.get('piholeSettings', function(result) {
