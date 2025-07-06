@@ -26,13 +26,13 @@ function addNewPihole() {
 function disableAllPihole() {
     var selectedDuration = parseInt(document.getElementById('disableDuration').value);
     makeApiCallForAllPihole(false, selectedDuration).then(() => {
-        // window.close();
+        window.close();
     });
 }
 
 function enableAllPihole() {
     makeApiCallForAllPihole(true, 0).then(() => {
-        // window.close();
+        window.close();
     });
 }
 
