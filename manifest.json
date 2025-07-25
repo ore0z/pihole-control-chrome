@@ -6,7 +6,7 @@
     "48": "images/pihole48.png",
     "128": "images/pihole128.png"
   },
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Enable and disable multiple Pi-hole instances",
   "permissions": [
     "storage"

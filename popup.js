@@ -24,15 +24,33 @@ function addNewPihole() {
 }
 
 function disableAllPihole() {
+    var button = document.getElementById('disableAllPiholeButton');
+    var originalText = button.textContent;
+    button.textContent = 'Applying...';
+    button.disabled = true;
+    
     var selectedDuration = parseInt(document.getElementById('disableDuration').value);
     makeApiCallForAllPihole(false, selectedDuration).then(() => {
         window.close();
+    }).catch(() => {
+        // Restore button text and enable it if there's an error
+        button.textContent = originalText;
+        button.disabled = false;
     });
 }
 
 function enableAllPihole() {
+    var button = document.getElementById('enableAllPiholeButton');
+    var originalText = button.textContent;
+    button.textContent = 'Applying...';
+    button.disabled = true;
+    
     makeApiCallForAllPihole(true, 0).then(() => {
         window.close();
+    }).catch(() => {
+        // Restore button text and enable it if there's an error
+        button.textContent = originalText;
+        button.disabled = false;
     });
 }
 
